@@ -1,0 +1,5 @@
+p=1, Time=0.457755, Speedup=1.0
+p=2, Time=0.272701, Speedup=1.6786
+p=4, Time=0.098489, Speedup=4.64778
+p=8, Time=0.057881, Speedup=7.90855
+p=16, Time=0.032497, Speedup=14.0861
