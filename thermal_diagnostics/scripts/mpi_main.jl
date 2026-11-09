@@ -33,9 +33,13 @@ function main()
     hi = (rank + 1) * q + min(rank + 1, r)
     n = max(0, hi - lo + 1)
 
+    # Общий буфер ранга для операторов `M`, `K` и правой части `f(t)`
     send_buf = Vector{Float64}(undef, 3 * n)
+
+    # Буфер на управляющем процессе для сбора локальных буферов рангов
     recv_buf = rank == 0 ? Vector{Float64}(undef, 3 * c.Nz) : nothing
 
+    # Раскладка для recv_buf (сколько элементов от каждого ранга)
     lengths = zeros(Int32, nprocs)
     for i in 0:nprocs-1
         lo_i = i * q + min(i, r) + 1
@@ -45,6 +49,8 @@ function main()
     counts = 3 .* lengths
     recv_vbuf = rank == 0 ? VBuffer(recv_buf, counts) : VBuffer(nothing)
 
+    # Функция для одного прогона. Каждай ранг заполняет свой буфер, 
+    # MPI.Gatherv! собирает результаты всех рангов в recv_vbuf
     function run_once!()
         if n > 0
             M_loc = local_M_matvec(vec, lo, hi, gb.Vs, p, gc, c)
@@ -74,6 +80,7 @@ function main()
     min_time = minimum(times)
     all_times = MPI.Gather(min_time, 0, comm)
 
+    # Запись результатов
     if rank == 0
         max_time = maximum(all_times)
         @printf("MPI p=%d, Grid=%dx%d+%d, Time (max over ranks) = %.6f sec\n",

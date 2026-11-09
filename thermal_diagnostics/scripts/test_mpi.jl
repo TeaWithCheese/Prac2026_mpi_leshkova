@@ -6,6 +6,8 @@ using thermal_diagnostics.MPIBuild
 using Random
 using Printf
 
+# Тестовая программа для проверки на локальной машине логики mpi_main
+
 function main()
     MPI.Init()
     comm = MPI.COMM_WORLD
