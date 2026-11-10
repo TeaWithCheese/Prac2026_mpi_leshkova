@@ -49,7 +49,7 @@ julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
 
 ---- 
 
-<img src="pics_for_report/lomonosov_results.png" alt="results" width="869">
+<img src="thermal-diagnostics/pics_for_report/lomonosov_results.png" alt="results" width="869">
 
 | p | Время T(p), с | Ускорение S(p) |
 |---:|---:|---:|
@@ -64,7 +64,7 @@ julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
 ### График сильной масштабируемости
 $\quad$
 
-<img src="pics_for_report/scaling_plot.png" alt="scaling plot" width="558">
+<img src="thermal-diagnostics/pics_for_report/scaling_plot.png" alt="scaling plot" width="558">
 
 - Эффективность параллельной реализации ограничена затратами на передачу данных при сборе результатов и репликации вектора (MPI_Gatherv)
 - На 4 процессах наблюдается сверхлинейное ускорение, что объясняется переходом от вычислений на одном ядре к использованию совокупной пропускной способности кэш-памяти и оперативной памяти нескольких узлов
